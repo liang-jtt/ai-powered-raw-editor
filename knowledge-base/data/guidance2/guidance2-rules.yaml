@@ -1,0 +1,121 @@
+rules:
+  - id: r2-001
+    image_type: portrait
+    problem: skin too red
+    observable_signs: cheeks and highlights clip toward magenta/red while neutral whites look correct
+    diagnosis: hue error is localized to skin, not global white balance
+    preferred_actions: use People/Color Range mask; reduce red/orange saturation or shift hue subtly; keep global WB stable
+    avoid_actions: "lowering global temperature; reason: shifts neutral background and clothing; exception: whole scene is demonstrably warm"
+    quality_checks: inspect skin at 100% and compare neutral reference
+    local_adjustment_or_mask: true
+    source_id: adobe_lrc_masking_2026
+    confidence: medium
+    needs_validation: true
+  - id: r2-002
+    image_type: portrait
+    problem: skin gray or lifeless
+    observable_signs: low chroma skin, preserved exposure, no clipping
+    diagnosis: local saturation/contrast deficiency rather than exposure failure
+    preferred_actions: gentle masked texture/clarity and vibrance; verify pores remain natural
+    avoid_actions: "large global saturation increase; reason: oversaturates background; exception: intentionally stylized grade"
+    quality_checks: face/background comparison and grayscale check
+    local_adjustment_or_mask: true
+    source_id: adobe_lrc_masking_2026
+    confidence: medium
+    needs_validation: true
+  - id: r2-003
+    image_type: portrait
+    problem: skin green under mixed light
+    observable_signs: jaw/forehead differ in hue; neutral card varies across frame
+    diagnosis: multiple light sources require spatial correction
+    preferred_actions: correct dominant WB, then mask affected skin region with tint adjustment
+    avoid_actions: "one global tint value; reason: fixes one light and worsens another"
+    quality_checks: sample skin and neutral objects in each light zone
+    local_adjustment_or_mask: true
+    source_id: adobe_lrc_masking_2026
+    confidence: medium
+    needs_validation: true
+  - id: r2-004
+    image_type: nightscape
+    problem: visible luminance/chroma noise
+    observable_signs: speckles in shadows and color blotches in sky
+    diagnosis: high-ISO or lifted-shadow noise
+    preferred_actions: Denoise first, then reassess detail and apply selective masking
+    avoid_actions: "continue increasing denoise after texture turns waxy; reason: destroys fine detail"
+    quality_checks: 100% shadow, hair/foliage edge, and color patch inspection
+    local_adjustment_or_mask: optional
+    source_id: adobe_lrc_enhance_2026
+    confidence: high
+    needs_validation: false
+  - id: r2-005
+    image_type: nightscape
+    problem: atmosphere lost after noise reduction
+    observable_signs: neon/sign glow becomes flat and color separation collapses
+    diagnosis: denoise is suppressing meaningful low-contrast structure
+    preferred_actions: back off strength; protect light sources with local mask; compare before/after at fit view
+    avoid_actions: "global clarity/sharpening rescue; reason: halos and crunchy glow"
+    quality_checks: highlight shape, glow gradient, and shadow texture
+    local_adjustment_or_mask: true
+    source_id: adobe_lrc_enhance_2026
+    confidence: medium
+    needs_validation: true
+  - id: r2-006
+    image_type: backlit portrait
+    problem: subject dark against bright background
+    observable_signs: background near clipping while face lacks readable midtones
+    diagnosis: exposure relationship is uneven, not simply globally underexposed
+    preferred_actions: preserve background highlights; lift subject with Subject/People mask and check skin color
+    avoid_actions: "global exposure boost; reason: clips sky/windows and flattens contrast"
+    quality_checks: face histogram, background highlight warning, hair-edge mask
+    local_adjustment_or_mask: true
+    source_id: adobe_lrc_masking_2026
+    confidence: high
+    needs_validation: false
+  - id: r2-007
+    image_type: indoor mixed light
+    problem: inconsistent white balance
+    observable_signs: tungsten side orange and window side blue/green
+    diagnosis: spatially varying illuminants
+    preferred_actions: choose a neutral anchor, set compromise WB, then use local masks for zones
+    avoid_actions: "chasing every zone with global WB; reason: creates new errors elsewhere"
+    quality_checks: whites, skin, and shadow tint per zone
+    local_adjustment_or_mask: true
+    source_id: adobe_lrc_masking_2026
+    confidence: medium
+    needs_validation: true
+  - id: r2-008
+    image_type: landscape
+    problem: subject does not stand out
+    observable_signs: sky/vegetation competes at similar contrast and saturation
+    diagnosis: attention hierarchy is weak
+    preferred_actions: mask subject or sky separately; use modest local contrast/exposure separation
+    avoid_actions: "global clarity/saturation; reason: increases competition everywhere"
+    quality_checks: thumbnail read, edge halos, and local-vs-global comparison
+    local_adjustment_or_mask: true
+    source_id: adobe_lrc_masking_2026
+    confidence: high
+    needs_validation: false
+  - id: r2-009
+    image_type: any
+    problem: over-sharpening
+    observable_signs: bright/dark halos, ringing around branches or eyelashes
+    diagnosis: sharpening exceeds captured edge information
+    preferred_actions: reduce sharpening and use masking/detail controls selectively
+    avoid_actions: "sharpening to compensate for missed focus; reason: artifacts increase without real detail"
+    quality_checks: 100% edge inspection and fit-view naturalness
+    local_adjustment_or_mask: optional
+    source_id: adobe_lrc_enhance_2026
+    confidence: medium
+    needs_validation: true
+  - id: r2-010
+    image_type: any
+    problem: profile/style too strong
+    observable_signs: color shifts dominate subject identity or skin tone
+    diagnosis: creative profile intensity exceeds scene intent
+    preferred_actions: treat profile as starting point; lower Amount or revert to Adobe/Camera Matching base
+    avoid_actions: "adding saturation to force a dull image after a bad profile; reason: compounds clipping"
+    quality_checks: neutral objects, skin, and before/after side-by-side
+    local_adjustment_or_mask: false
+    source_id: adobe_lrc_tone_color_2025
+    confidence: high
+    needs_validation: false

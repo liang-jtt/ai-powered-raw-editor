@@ -1,0 +1,57 @@
+cases:
+  - id: candidate2-rawtherapee-pp3-search
+    knowledge_kind: case_candidate
+    source_id: rawpedia_processing_profiles_2023
+    scene: unknown
+    image_type: unknown
+    legal_raw_access: not demonstrated
+    processing_record: PP3 sidecar concept documented, but no scene-specific recipe or edit sequence
+    before_after: no paired image demonstrated
+    diagnosis: unknown
+    actions: unknown
+    quality_checks: unknown
+    license: unknown
+    reproducibility: not_reproducible
+    completeness: rejected
+    missing_requirements: [downloadable RAW, scene-specific steps, parameter record, before/after result]
+    confidence: high
+    needs_validation: false
+  - id: candidate2-pixls-before-after-forum
+    knowledge_kind: case_candidate
+    source_id: rawpedia_processing_profiles_2023
+    scene: unknown
+    image_type: unknown
+    candidate_url: https://discuss.pixls.us/
+    legal_raw_access: unknown
+    processing_record: unknown; forum and search references alone do not prove a complete recipe
+    before_after: unknown
+    diagnosis: unknown
+    actions: unknown
+    quality_checks: unknown
+    license: unknown
+    reproducibility: unknown
+    completeness: pending_review
+    missing_requirements: [specific thread, confirmed RAW download/license, processing history or PP3, before/after]
+    confidence: low
+    needs_validation: true
+  - id: candidate2-ppa-exposure-wb-video
+    knowledge_kind: case_candidate
+    source_id: ppa_exposure_wb_video_2025
+    scene: portrait or event workflow
+    image_type: unknown
+    candidate_url: https://www.youtube.com/results?search_query=Professional+Photographers+of+America+Get+It+Right+In-Camera+Exposure+White+Balance+Workflow
+    legal_raw_access: not demonstrated
+    processing_record: only a public video listing was available in the prior extraction
+    before_after: not verified
+    diagnosis: exposure and white-balance workflow topic only
+    actions: unknown
+    quality_checks: unknown
+    license: public video listing; raw/image rights unknown
+    reproducibility: not_reproducible
+    completeness: rejected
+    missing_requirements: [specific accessible video/transcript, RAW download, detailed steps or settings, before/after]
+    confidence: low
+    needs_validation: true
+summary:
+  complete_case_count: 0
+  reason: "No candidate met every required condition: legally accessible RAW, sufficient processing record, reproducible before/after, source, and license information."

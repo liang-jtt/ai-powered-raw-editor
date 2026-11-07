@@ -1,0 +1,57 @@
+sources:
+  - source_id: rawpedia-exposure
+    title: Exposure
+    organization: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Exposure
+    source_type: official-doc
+    accessed_at: '2026-08-31'
+    license: unknown
+    evidence_level: official_documentation
+  - source_id: rawpedia-white-balance
+    title: White Balance
+    organization: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/White_Balance
+    source_type: official-doc
+    accessed_at: '2026-08-31'
+    license: unknown
+    evidence_level: official_documentation
+  - source_id: rawpedia-noise-reduction
+    title: Noise Reduction
+    organization: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Noise_Reduction
+    source_type: official-doc
+    accessed_at: '2026-08-31'
+    license: unknown
+    evidence_level: official_documentation
+  - source_id: rawpedia-sharpening
+    title: Sharpening
+    organization: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Sharpening
+    source_type: official-doc
+    accessed_at: '2026-08-31'
+    license: unknown
+    evidence_level: official_documentation
+  - source_id: rawpedia-local-adjustments
+    title: Local Adjustments
+    organization: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Local_Adjustments
+    source_type: official-doc
+    accessed_at: '2026-08-31'
+    license: unknown
+    evidence_level: official_documentation
+  - source_id: project-pp3-rt513
+    title: Project RawTherapee 5.13 PP3 example
+    organization: project-local
+    url: art-main/output/DSC00906.pp3
+    source_type: local-pp3
+    accessed_at: '2026-08-31'
+    license: unknown
+    evidence_level: field_presence_only
+  - source_id: project-examples-rt511
+    title: Project example RAW, PP3, and JPEG exports
+    organization: project-local
+    url: art-main/examples/
+    source_type: local-case-assets
+    accessed_at: '2026-08-31'
+    license: unknown
+    evidence_level: asset_bundle_presence_only

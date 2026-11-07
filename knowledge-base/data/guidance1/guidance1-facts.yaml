@@ -1,0 +1,111 @@
+facts:
+  - id: f-exposure-compensation-ev
+    knowledge_kind: fact
+    source_id: rawpedia-exposure
+    tool: Exposure Compensation
+    module: Exposure
+    topic: EV mapping
+    description: Slider values are ISO/EV stops; +1 equals one stop brighter and shifts the histogram right.
+    parameters: {name: Exposure compensation, unit: EV, confirmed_range: unknown}
+    limitations: Can reveal clipping; white-balance changes also alter the raw base gain and apparent brightness.
+    verification: Inspect histogram and clipped-highlight indicator at 100%.
+    confidence: high
+  - id: f-highlight-reconstruction
+    knowledge_kind: fact
+    source_id: rawpedia-exposure
+    tool: Highlight Reconstruction
+    module: Exposure
+    topic: clipped raw data
+    description: Reconstructs missing channel data using other unclipped channels; Color Propagation can bleed nearby color.
+    parameters: {methods: [Luminance Recovery, Color Propagation, Inpaint opposed, CIELab, Blend]}
+    limitations: Cannot recover information clipped in all channels; Color Propagation may bleed wrong colors and is slower.
+    verification: Toggle clipped indicator and inspect small blown areas at 100%.
+    confidence: high
+  - id: f-highlight-compression
+    knowledge_kind: fact
+    source_id: rawpedia-exposure
+    tool: Highlight Compression
+    module: Exposure
+    topic: non-destructive highlight rolloff
+    description: Compresses highlight data that still exists, including clipping introduced later by exposure changes.
+    parameters: {name: Highlight compression, range: unknown, threshold_name: Highlight Compression Threshold}
+    limitations: Excessive compression turns irrecoverable whites gray and makes the image dull.
+    verification: Histogram should touch, not bunch against, the right edge; whites should remain white.
+    confidence: high
+  - id: f-white-balance-neutral
+    knowledge_kind: fact
+    source_id: rawpedia-white-balance
+    tool: White Balance
+    module: Color
+    topic: neutral reference
+    description: White balance multiplies RGB channels; a neutral sample has equal RGB (or matching Lab a* and b*).
+    parameters: {controls: [Temperature, Tint], units: {temperature: unknown, tint: unknown}}
+    limitations: Eyes are affected by ambient surround; creative casts should be made with color-toning tools after neutralization.
+    verification: Sample a known gray/white patch and compare RGB indicator bars.
+    confidence: high
+  - id: f-noise-types
+    knowledge_kind: fact
+    source_id: rawpedia-noise-reduction
+    tool: Noise Reduction
+    module: Detail
+    topic: noise taxonomy
+    description: Chrominance noise appears as color blotches; luminance noise is brightness variation and may be retained as grain.
+    parameters: {sliders: [Luminance, Detail recovery, Chrominance], ranges: unknown}
+    limitations: Noise tools target different sources; dark-frame, impulse, hot/dead pixel and line-noise filters may be needed.
+    verification: Inspect a flat area and a detailed area at 100% or greater.
+    confidence: high
+  - id: f-noise-order
+    knowledge_kind: fact
+    source_id: rawpedia-noise-reduction
+    tool: Noise Reduction
+    module: Detail
+    topic: processing order
+    description: For very noisy high-ISO files, LMMSE or IGV demosaicing avoids AMaZE maze artifacts; reduce noise before aggressive sharpening.
+    parameters: {recommended_demosaicing: [LMMSE, IGV], preview_scale: '1:1+'}
+    limitations: Detail recovery can leave small artifacts; median filtering can remove them but also soften texture.
+    verification: Compare demosaicing and noise settings in a 100% detail window.
+    confidence: high
+  - id: f-sharpen-radius
+    knowledge_kind: fact
+    source_id: rawpedia-sharpening
+    tool: Unsharp Mask
+    module: Sharpening
+    topic: radius
+    description: Radius controls the size of amplified detail and halo width; smaller radii generally give better quality.
+    parameters: {name: Radius, low_iso_guidance: '0.5-0.7', unit: pixels_or_tool_units}
+    limitations: Values are image-dependent; motion blur and high ISO need different treatment.
+    verification: Inspect edges and halos at 100%.
+    confidence: high
+  - id: f-sharpen-threshold
+    knowledge_kind: fact
+    source_id: rawpedia-sharpening
+    tool: Unsharp Mask
+    module: Sharpening
+    topic: threshold mask
+    description: Threshold confines sharpening by luminosity and suppresses noise amplification and halos.
+    parameters: {name: Threshold, range: unknown}
+    limitations: Too restrictive leaves detail soft; mask must be judged on the actual image.
+    verification: Preview the sharpening contrast mask and compare shadow/highlight edges.
+    confidence: high
+  - id: f-edge-only
+    knowledge_kind: fact
+    source_id: rawpedia-sharpening
+    tool: Sharpen Only Edges
+    module: Sharpening
+    topic: noisy photos
+    description: Edge-only mode leaves uniform areas untouched; Edge Tolerance separates edges from noise.
+    parameters: {edge_tolerance_low_iso: '1000 or less', edge_tolerance_high_iso: '2500-3000 or more'}
+    limitations: Higher detection radius slows processing and can miss fine detail.
+    verification: Check flat regions for noise increase and edges for crispness at 1:1.
+    confidence: high
+  - id: f-local-mask
+    knowledge_kind: fact
+    source_id: rawpedia-local-adjustments
+    tool: RT-spot / Color & Light
+    module: Local Adjustments
+    topic: selective targeting
+    description: Local tools use luminance, chrominance and hue masks with Scope and Transition; deltaE preview reveals affected pixels.
+    parameters: {controls: [Scope, Transition, deltaE preview], ranges: unknown}
+    limitations: Masks can spill into similar colors; transition must be checked at boundaries.
+    verification: Enable deltaE mask preview, then toggle adjustment and inspect edges at 100%.
+    confidence: medium

@@ -1,0 +1,9 @@
+.venv*/
+__pycache__/
+*.pyc
+.runtime/
+*.local.json
+*.pth
+*.pt
+*.safetensors
+.original-files.sha256.json

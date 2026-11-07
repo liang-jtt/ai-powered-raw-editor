@@ -1,0 +1,161 @@
+rules:
+  - id: gr2-portrait-red-skin
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    scene: portrait
+    image_type: portrait with otherwise neutral whites
+    observable_signs: cheeks or skin highlights are disproportionately red or magenta while neutral objects remain plausible
+    diagnosis: likely localized skin hue/chroma issue rather than whole-frame white-balance error
+    preconditions: inspect a neutral object and compare face with neck; exclude intentional colored light
+    preferred_actions: apply a restrained targeted skin color correction and preserve the global neutral baseline
+    avoid_actions: use a large global temperature shift to correct the face
+    exceptions: apply global white-balance correction when neutral objects across the frame share the same warm cast
+    quality_checks: skin retains hue variation; neutrals and clothing do not shift; no mask boundary is visible
+    human_confirmation: required for complexion naturalness and makeup/styling intent
+    confidence: medium
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: People or Color Range mask, dependencies: [People Mask, Color Range], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gr2-portrait-gray-skin
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    scene: portrait
+    image_type: correctly exposed portrait with low skin vitality
+    observable_signs: face is low-chroma/low-local-contrast while background saturation and highlight detail remain normal
+    diagnosis: localized color or microcontrast deficit, not automatically underexposure
+    preconditions: check exposure and white balance before treating color; exclude intentionally muted grade
+    preferred_actions: make minimal targeted color or texture adjustment, then compare against the original
+    avoid_actions: increase global saturation to make the face look alive
+    exceptions: global color action may be appropriate when the entire capture is uniformly desaturated
+    quality_checks: pores and highlight transitions remain natural; background is not over-saturated
+    human_confirmation: required because vitality is an aesthetic threshold
+    confidence: medium
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: People mask plus local Texture/Color controls, dependencies: [People Mask], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gr2-portrait-green-skin-mixed-light
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    scene: indoor mixed light
+    image_type: portrait with more than one visible illuminant
+    observable_signs: skin regions differ green/magenta by position and neutral objects vary across the frame
+    diagnosis: spatially varying illumination; one global tint cannot correct all zones
+    preconditions: identify each light zone and decide whether its color contrast is intentional
+    preferred_actions: establish a compromise global white balance then correct only affected zones semantically
+    avoid_actions: chase each local cast with repeated global tint changes
+    exceptions: preserve deliberate colored practical light when it contributes to the scene story
+    quality_checks: neutral anchors and skin are plausible in each zone; zone transitions are smooth
+    human_confirmation: required to approve retained mixed-light mood
+    confidence: medium
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: local temperature/tint masks, dependencies: [People Mask, Brush or Range Mask], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gr2-night-denoise-order
+    knowledge_kind: workflow
+    source_id: adobe_lrc_enhance_2026
+    scene: night
+    image_type: supported high-ISO raw or DNG
+    observable_signs: chroma speckles or luminance noise in shadow/flat zones
+    diagnosis: noise must be evaluated before detail-reliant local edits because later results can change
+    preconditions: verify source format and inspect at 100% plus delivery size
+    preferred_actions: reduce objectionable noise early, then re-evaluate edge/detail and continue corrections
+    avoid_actions: treat fit-to-screen smoothness as proof that noise/detail is acceptable
+    exceptions: preserve visible grain when the intended output or scene mood benefits from it
+    quality_checks: inspect flat shadows, edges, foliage/hair, and colored glow at 100%
+    human_confirmation: required for grain-versus-atmosphere tradeoff
+    confidence: high
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: Enhance Denoise before AI masks/Remove, dependencies: [Enhance], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gr2-night-atmosphere-loss
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_enhance_2026
+    scene: night
+    image_type: artificial-light scene with deep shadows
+    observable_signs: light glow becomes flat, sky becomes waxy, or fine structures disappear after denoising
+    diagnosis: noise reduction is suppressing meaningful low-contrast image structure
+    preconditions: compare before/after at both fit view and 100%
+    preferred_actions: reduce smoothing or protect key light/detail regions with a targeted approach
+    avoid_actions: add strong global clarity or sharpening as a rescue step
+    exceptions: small web output may tolerate more smoothing than large print output
+    quality_checks: glow gradients remain dimensional; no crunchy halos; color separation survives
+    human_confirmation: required for acceptable amount of residual grain
+    confidence: medium
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: Denoise followed by local masks, dependencies: [Enhance, Masking], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gr2-backlit-subject-background
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    scene: backlit
+    image_type: portrait or subject against bright window/sky
+    observable_signs: subject lacks readable midtones while background highlights are near clipping
+    diagnosis: subject/background imbalance rather than simple global underexposure
+    preconditions: identify intentional silhouette and inspect whether highlights contain recoverable detail
+    preferred_actions: preserve important background highlights and raise subject readability through a targeted semantic action
+    avoid_actions: increase global exposure until the background clips
+    exceptions: keep subject dark when a silhouette is the intended composition
+    quality_checks: face/subject reads; background retains desired highlight structure; boundary has no halo
+    human_confirmation: required to decide silhouette versus readable-subject intent
+    confidence: high
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: Subject/People mask, dependencies: [Subject Mask or People Mask], rawtherapee_mapping: required, execution_status: conceptual_only}
+  - id: gr2-landscape-hierarchy
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    scene: landscape
+    image_type: landscape with a designated subject
+    observable_signs: sky, vegetation, and intended subject have similar contrast/saturation and compete at thumbnail size
+    diagnosis: weak visual hierarchy
+    preconditions: identify intended subject; exclude scenes designed as uniform all-over detail
+    preferred_actions: create modest local tonal or color separation between subject and competing regions
+    avoid_actions: increase global clarity or saturation across the entire image
+    exceptions: preserve uniformity for documentary or intentionally flat scenes
+    quality_checks: subject reads at thumbnail; no halos; background remains credible
+    human_confirmation: required to confirm intended subject and mood
+    confidence: high
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: Subject/Sky/Background masks, dependencies: [Masking], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gr2-overdenoise
+    knowledge_kind: heuristic
+    source_id: rawpedia_noise_reduction
+    scene: any
+    image_type: high-ISO detailed subject
+    observable_signs: hair, foliage, fabric, or repeated texture smear into uniform surfaces
+    diagnosis: smoothing/detail-recovery balance is too aggressive
+    preconditions: inspect at 100%; distinguish genuine noise from captured texture
+    preferred_actions: back off noise reduction and evaluate texture preservation before further edits
+    avoid_actions: continue smoothing because noise remains visible at extreme magnification
+    exceptions: aggressive reduction can be acceptable for tiny output with no fine-detail requirement
+    quality_checks: key texture, color boundaries, and shadow structure remain legible
+    human_confirmation: required for output-size-dependent threshold
+    confidence: high
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: none, dependencies: [], rawtherapee_mapping: Agent 1 owns technical mapping, execution_status: conceptual_only}
+  - id: gr2-oversharpen
+    knowledge_kind: heuristic
+    source_id: rawpedia_noise_reduction
+    scene: any
+    image_type: sharpened image
+    observable_signs: bright/dark edge halos, ringing, or brittle eyelashes/branches
+    diagnosis: edge contrast amplification exceeds captured detail
+    preconditions: inspect at 100% after denoising and account for output scaling
+    preferred_actions: reduce edge enhancement and retest neutral high-contrast boundaries
+    avoid_actions: sharpen aggressively to compensate for motion blur or missed focus
+    exceptions: controlled high-acutance look is a preference and must be explicitly requested
+    quality_checks: edge transitions stay neutral; no halos at normal view; texture is not crunchy
+    human_confirmation: required for style-heavy output
+    confidence: high
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: none, dependencies: [], rawtherapee_mapping: Agent 1 owns technical mapping, execution_status: conceptual_only}
+  - id: gr2-overstrong-style
+    knowledge_kind: preference
+    source_id: adobe_lrc_tone_color_2025
+    scene: any
+    image_type: image using a creative profile or strong grade
+    observable_signs: profile color shifts dominate skin, neutral objects, or subject identity
+    diagnosis: selected style intensity exceeds the stated scene intent
+    preconditions: establish whether a stylized grade was requested and retain an unstyled comparison
+    preferred_actions: reduce style intensity or return to a neutral starting point before making corrective edits
+    avoid_actions: add global saturation to compensate for a poor style choice
+    exceptions: deliberate editorial/film look approved by user
+    quality_checks: compare original, neutral baseline, and styled version; inspect neutrals and skin
+    human_confirmation: mandatory because style preference cannot be inferred as fact
+    confidence: high
+    needs_validation: false
+    implementation_notes: {lightroom_implementation: Profile Amount/Adobe or Camera Matching profile, dependencies: [], rawtherapee_mapping: not applicable until a style target is specified, execution_status: conceptual_only}

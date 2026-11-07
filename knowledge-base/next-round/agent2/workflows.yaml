@@ -1,0 +1,61 @@
+workflows:
+  - id: gw2-portrait
+    knowledge_kind: workflow
+    source_id: adobe_lrc_masking_2026
+    scene: portrait
+    goal: preserve believable complexion, readable face, and captured texture
+    steps:
+      - {order: 1, action: establish global exposure and neutral baseline, reason: isolate local skin problems from scene-wide errors}
+      - {order: 2, action: inspect skin versus neck and neutral objects, reason: distinguish local hue issue from white-balance issue}
+      - {order: 3, action: make restrained targeted semantic correction where needed, reason: preserve unaffected regions}
+      - {order: 4, action: inspect at 100% and fit view, reason: catch waxiness and boundary artifacts}
+    stop_conditions: face is readable, skin looks plausible, no corrective boundary is visible
+    failure_signals: waxy pores, red highlights, gray whites, visible jaw/hair halo
+    human_confirmation: approve complexion, retouch level, and intended color grade
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: People/Color Range masks, dependencies: [People Mask, Color Range], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gw2-night
+    knowledge_kind: workflow
+    source_id: adobe_lrc_enhance_2026
+    scene: night
+    goal: suppress distracting noise without losing light atmosphere or fine structure
+    steps:
+      - {order: 1, action: establish exposure without crushing meaningful shadows, reason: dark mood is not automatically underexposure}
+      - {order: 2, action: evaluate and reduce objectionable noise before detail-dependent local operations, reason: upstream denoise changes later results}
+      - {order: 3, action: inspect texture and glow at 100%, reason: denoise artifacts hide at fit view}
+      - {order: 4, action: protect or restore only meaningful regions, reason: lights and shadows need different treatment}
+    stop_conditions: noise is unobtrusive at delivery size and glow retains dimensional gradients
+    failure_signals: waxy sky, plastic foliage, color blotches, halos, crushed shadow detail
+    human_confirmation: select acceptable grain level for intended delivery
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: Enhance Denoise before masks, dependencies: [Enhance, Masking], rawtherapee_mapping: required, execution_status: needs_mapping}
+  - id: gw2-backlit-mixed
+    knowledge_kind: workflow
+    source_id: adobe_lrc_masking_2026
+    scene: backlit or mixed light
+    goal: balance subject readability, background highlights, and spatial color plausibility
+    steps:
+      - {order: 1, action: identify highlight limit, neutral anchors, and light zones, reason: establishes what can safely move globally}
+      - {order: 2, action: set compromise global exposure and white balance, reason: preserve shared scene baseline}
+      - {order: 3, action: apply targeted subject/background or zone correction, reason: uneven illumination cannot be solved globally}
+      - {order: 4, action: compare thumbnail, 100%, and boundaries, reason: validate hierarchy and transition quality}
+    stop_conditions: subject reads, retained highlights are plausible, zones transition smoothly
+    failure_signals: clipped sky/window, gray skin, colored seams, halo edges
+    human_confirmation: decide intended silhouette and mixed-light color contrast
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: Subject/People/Brush masks, dependencies: [Masking], rawtherapee_mapping: required, execution_status: conceptual_only}
+  - id: gw2-landscape
+    knowledge_kind: workflow
+    source_id: adobe_lrc_masking_2026
+    scene: landscape
+    goal: make intended subject legible without globally overprocessing the frame
+    steps:
+      - {order: 1, action: identify intended subject at thumbnail size, reason: establishes attention hierarchy}
+      - {order: 2, action: correct global exposure and white balance, reason: avoid using style controls to correct capture errors}
+      - {order: 3, action: separate subject and competitors with restrained targeted actions, reason: background should not gain equal emphasis}
+      - {order: 4, action: inspect high-contrast edges, reason: local contrast can create halos}
+    stop_conditions: subject reads at thumbnail and full view while background remains natural
+    failure_signals: global crunchiness, haloed skyline, over-saturated sky, competing background
+    human_confirmation: approve subject choice and desired drama level
+    needs_validation: true
+    implementation_notes: {lightroom_implementation: Subject/Sky/Background masks, dependencies: [Masking], rawtherapee_mapping: required, execution_status: needs_mapping}

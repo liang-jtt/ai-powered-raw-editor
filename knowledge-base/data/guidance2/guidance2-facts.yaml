@@ -1,0 +1,25 @@
+facts:
+  - id: f2-001
+    knowledge_kind: fact
+    source_id: adobe_lrc_enhance_2026
+    statement: Adobe recommends applying Denoise before other tools, including AI masks and Remove, because Enhance may change later tool results.
+    scope: raw and supported DNG workflows in Lightroom Classic
+    limitations: Does not specify a universal denoise strength; inspect texture at 100%.
+    verification: direct page paragraph under Apply Denoise
+    confidence: high
+  - id: f2-002
+    knowledge_kind: fact
+    source_id: adobe_lrc_masking_2026
+    statement: Global tone/color controls affect the whole photo, while Masking enables targeted corrections such as lifting a face or enhancing a sky.
+    scope: portraits, landscapes, and any image with uneven subject/background needs
+    limitations: Mask edge quality must be checked; automatic selection can require add/subtract cleanup.
+    verification: direct page introduction and mask sections
+    confidence: high
+  - id: f2-003
+    knowledge_kind: workflow
+    source_id: adobe_lrc_tone_color_2025
+    statement: Profiles are intended as a starting foundation and applying one does not overwrite edit-slider values; Adobe recommends adaptive profiles before other adjustments.
+    scope: raw development in Lightroom Classic
+    limitations: Creative profile appearance remains a style choice, not a quality guarantee.
+    verification: direct page profile and adaptive-profile sections
+    confidence: high

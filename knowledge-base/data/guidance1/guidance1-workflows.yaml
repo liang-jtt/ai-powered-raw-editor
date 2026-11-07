@@ -1,0 +1,22 @@
+workflows:
+  - id: w-exposure-color
+    name: exposure-and-color-minimal-sop
+    steps:
+      - {order: 1, action: neutralize White Balance from a known gray/white area, reason: downstream color tools assume correct WB}
+      - {order: 2, action: set Exposure Compensation while watching histogram, reason: establish global placement}
+      - {order: 3, action: enable Highlight Reconstruction only for raw clipping, reason: reconstruct missing channels}
+      - {order: 4, action: use Highlight Compression for recoverable pipeline clipping, reason: roll off existing data}
+      - {order: 5, action: use local adjustment for subject/background imbalance, reason: avoid damaging global tone}
+    stop_conditions: neutral patch agrees and histogram/highlights are plausible
+    failure_signals: gray whites, color cast in neutrals, blocked shadows
+  - id: w-high-iso-denoise
+    name: high-iso-noise-minimal-sop
+    steps:
+      - {order: 1, action: choose LMMSE or IGV demosaicing for very noisy RAW, reason: avoid AMaZE maze artifacts}
+      - {order: 2, action: inspect at 100% in flat and detailed areas, reason: fit-to-screen hides noise changes}
+      - {order: 3, action: enable chrominance reduction, reason: remove unattractive color blotches}
+      - {order: 4, action: reduce luminance with Detail recovery initially 0, reason: control smoothing explicitly}
+      - {order: 5, action: restore Detail recovery and optionally median, reason: recover texture and remove residual specks}
+      - {order: 6, action: sharpen conservatively with threshold/edge-only, reason: prevent noise amplification}
+    stop_conditions: chroma blotches gone and key texture remains
+    failure_signals: waxy texture, maze artifacts, halos

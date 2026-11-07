@@ -1,0 +1,52 @@
+cases:
+  - id: case2-001
+    image_type: backlit portrait
+    camera: unknown
+    ISO: unknown
+    lighting: bright window/backlight
+    problems: face too dark; background near clipping
+    diagnosis: subject/background exposure mismatch
+    actions: preserve global highlights; lift face with Subject/People mask; neutralize skin locally
+    before_after: workflow result described by Adobe masking examples; no downloadable source pair
+    parameters_or_pp3: unknown
+    quality_checks:
+      passed: [face midtone readability, background highlight retention]
+      failed: [no pixel-level source comparison available]
+    human_feedback: Adobe positions face lightening as a targeted correction example
+    reproducibility: medium
+    confidence: medium
+    source_id: adobe_lrc_masking_2026
+  - id: case2-002
+    image_type: high-ISO night scene
+    camera: unknown
+    ISO: unknown
+    lighting: artificial lights and deep shadows
+    problems: luminance/chroma noise; risk of flattened glow
+    diagnosis: denoise must be sequenced before masks and judged against fine detail
+    actions: apply Denoise; inspect sky/light edges; reduce strength or mask selectively if texture collapses
+    before_after: Adobe Enhance documentation describes expected detail-preserving intent; no source pair
+    parameters_or_pp3: unknown
+    quality_checks:
+      passed: [workflow ordering, supported-format check]
+      failed: [visual result and strength not supplied]
+    human_feedback: needs human choice between residual grain and atmosphere
+    reproducibility: medium
+    confidence: medium
+    source_id: adobe_lrc_enhance_2026
+  - id: case2-003
+    image_type: indoor portrait with mixed light
+    camera: unknown
+    ISO: unknown
+    lighting: window daylight plus warm practical light
+    problems: skin and neutral objects disagree across frame
+    diagnosis: spatially varying white balance
+    actions: set compromise WB; use local zone masks for tint/temperature; inspect transitions
+    before_after: PPA workflow listing supports exposure/WB sequencing; detailed pair unavailable
+    parameters_or_pp3: unknown
+    quality_checks:
+      passed: [zone-based diagnosis, local correction rationale]
+      failed: [camera metadata and measured WB unavailable]
+    human_feedback: final acceptability depends on whether mixed-light contrast is intentional
+    reproducibility: low-confidence reference
+    confidence: low
+    source_id: ppa_exposure_wb_video_2025

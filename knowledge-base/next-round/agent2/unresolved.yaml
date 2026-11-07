@@ -1,0 +1,25 @@
+unresolved:
+  - id: ur2-001
+    status: needs_validation
+    topic: RawTherapee mapping for semantic targeted corrections
+    reason: Lightroom People/Sky/Subject Mask cannot be treated as RawTherapee implementation evidence.
+  - id: ur2-002
+    status: needs_validation
+    topic: Denoise ordering in RawTherapee pipeline
+    reason: Adobe Enhance sequencing is tool-specific; RawTherapee behavior needs controlled tests.
+  - id: ur2-003
+    status: needs_validation
+    topic: Acceptable denoise threshold by ISO and delivery size
+    reason: sources establish artifact types but no universal strength or output criterion.
+  - id: ur2-004
+    status: needs_validation
+    topic: Skin hue and vitality tolerance across complexions and cameras
+    reason: requires varied RAW tests and human A/B feedback.
+  - id: ur2-005
+    status: needs_validation
+    topic: Mixed-light correction versus intentional color contrast
+    reason: depends on scene/story preference and cannot be resolved mechanically.
+  - id: ur2-006
+    status: blocked_by_evidence
+    topic: Two complete reproducible cases
+    reason: searched sources did not establish downloadable licensed RAW plus detailed processing record and before/after; candidates are recorded in cases.yaml.

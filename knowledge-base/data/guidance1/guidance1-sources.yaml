@@ -1,0 +1,36 @@
+sources:
+  - source_id: rawpedia-exposure
+    title: Exposure
+    author_or_org: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Exposure
+    date: unknown
+    license: unknown
+    coverage: exposure compensation, highlight reconstruction/compression, histogram, tone
+  - source_id: rawpedia-white-balance
+    title: White Balance
+    author_or_org: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/White_Balance
+    date: unknown
+    license: unknown
+    coverage: temperature/tint, neutral validation, automatic methods, exposure interaction
+  - source_id: rawpedia-noise-reduction
+    title: Noise Reduction
+    author_or_org: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Noise_Reduction
+    date: unknown
+    license: unknown
+    coverage: ISO noise types, demosaicing, luminance/chrominance workflow, median filter
+  - source_id: rawpedia-sharpening
+    title: Sharpening
+    author_or_org: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Sharpening
+    date: unknown
+    license: unknown
+    coverage: USM, radius, threshold, edge-only sharpening, halos
+  - source_id: rawpedia-local-adjustments
+    title: Local Adjustments
+    author_or_org: RawTherapee RawPedia
+    url: https://rawpedia.rawtherapee.com/Local_Adjustments
+    date: '2025-01-22'
+    license: unknown
+    coverage: RT-spots, color/light tools, masks, scope, transition, deltaE preview

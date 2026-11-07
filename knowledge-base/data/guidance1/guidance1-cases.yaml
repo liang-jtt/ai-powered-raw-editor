@@ -1,0 +1,23 @@
+cases:
+  - id: c-teide-clouds
+    image_type: landscape RAW with overexposed clouds
+    input_metadata: camera/ISO/date unknown; official RawPedia example
+    problems: clouds clipped and histogram pressed right
+    diagnosis: recoverable channel data plus irrecoverable white regions
+    actions: [enable clipped-highlight indicator, enable Highlight Reconstruction, increase Highlight Compression while monitoring histogram, stop when black clipped areas disappear but whites remain white]
+    before_after: RawPedia describes no compression versus correctly compressed histogram touching both ends
+    pp3_parameter_path: unknown (official article gives UI workflow, not PP3)
+    quality_checks: histogram endpoints, cloud texture, no gray whites
+    reproducibility: partially reproducible; image and exact PP3 unavailable
+    confidence: high
+  - id: c-iso6400-wall
+    image_type: ISO 6400 test wall RAW
+    input_metadata: ISO 6400; demosaicing variants shown by RawPedia
+    problems: maze-like artifacts, chroma blotches, luminance grain, residual specks
+    diagnosis: AMaZE artifacts and separable chroma/luma noise
+    actions: [switch to LMMSE or IGV, inspect at 100%, enable chrominance reduction, set luminance with Detail recovery 0, restore detail recovery, use median for remaining artifacts]
+    before_after: RawPedia before/after sequence shows reduced blotches and residual-artifact cleanup
+    pp3_parameter_path: unknown
+    quality_checks: flat wall smoothness versus edge/detail retention
+    reproducibility: partial; source image/PP3 not supplied
+    confidence: high

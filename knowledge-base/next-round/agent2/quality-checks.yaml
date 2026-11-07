@@ -1,0 +1,61 @@
+quality_checks:
+  - id: qc2-no-global-exposure-for-local-imbalance
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    when: subject is dark but background highlights are already near clipping
+    avoid: globally raise exposure
+    reason: it clips/reduces structure in the bright background while treating a localized problem
+    prefer_or_exception: prefer a targeted semantic subject action; exception is a deliberately blown background
+    quality_check: subject is readable and background highlight structure remains intentional
+    machine_check: highlight-clipping warning and luminance comparison by broad region
+    human_check: silhouette intent and compositional balance
+  - id: qc2-stop-denoise-on-texture-loss
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_enhance_2026
+    when: denoise makes foliage, hair, fabric, or light glow waxy/flat
+    avoid: increase denoise further
+    reason: meaningful image structure is being removed
+    prefer_or_exception: back off smoothing or protect key regions; exception is small output with no detail requirement
+    quality_check: compare at 100% and delivery size for texture and glow gradients
+    machine_check: none reliable without scene-aware reference
+    human_check: residual-grain tolerance
+  - id: qc2-no-saturation-for-grayness
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    when: a portrait face looks gray while scene exposure/WB may still be incorrect
+    avoid: increase global saturation first
+    reason: it can over-saturate background and hide the actual tonal/WB cause
+    prefer_or_exception: verify exposure/WB, then apply minimal targeted correction; exception is uniformly desaturated capture
+    quality_check: skin, background, and neutral objects remain balanced after correction
+    machine_check: compare global saturation change and neutral color shift
+    human_check: natural complexion
+  - id: qc2-no-sharpen-for-missed-focus
+    knowledge_kind: heuristic
+    source_id: rawpedia_noise_reduction
+    when: image softness is motion blur or missed focus rather than low acutance
+    avoid: strong sharpening
+    reason: creates ringing and halos without restoring lost information
+    prefer_or_exception: use restrained enhancement only when captured edges exist; exception is explicit stylized output request
+    quality_check: inspect high-contrast edges at 100% and normal viewing size
+    machine_check: halo/ringing detection can flag candidates but needs review
+    human_check: whether apparent sharpness looks credible
+  - id: qc2-return-human-for-style
+    knowledge_kind: preference
+    source_id: adobe_lrc_tone_color_2025
+    when: creative profile or grade changes skin, neutrals, or scene mood strongly
+    avoid: automatically label the stronger style as improvement
+    reason: visual style is preference-dependent
+    prefer_or_exception: present A/B against neutral baseline; exception is an explicit approved style reference
+    quality_check: user chooses A/B and explains whether color/mood supports the image
+    machine_check: report clipping and neutral shift only
+    human_check: mandatory A/B choice and free-text rationale
+  - id: qc2-mask-boundary-review
+    knowledge_kind: heuristic
+    source_id: adobe_lrc_masking_2026
+    when: targeted correction changes a face, sky, subject, or light zone
+    avoid: accepting result based only on adjustment amount
+    reason: selection spill and transition artifacts can be more objectionable than the original issue
+    prefer_or_exception: inspect boundaries on both dark and bright edges; exception is no local action used
+    quality_check: no halo, seam, or unintended adjacent-color shift
+    machine_check: none reliable without mask data
+    human_check: mandatory at 100% and fit view

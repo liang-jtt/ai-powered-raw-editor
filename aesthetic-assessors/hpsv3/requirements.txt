@@ -1,0 +1,5 @@
+# Official package has a training dependency stack. Use a separate environment.
+# Linux + CUDA is the recommended deployment target for this backend.
+hpsv3==1.0.0
+Pillow>=10.4,<13
+PyYAML>=6,<7

@@ -1,0 +1,265 @@
+# AI-PP3 - AI-Powered RawTherapee Profile Generator
+
+> **WARNING**: This is an experimental project, use at your own risk.
+
+![Before](/examples/5/IMGP2426.jpg)![After](/examples/5/ai.jpg)
+
+[CC BY-NC-SA 4.0](https://rawpedia.rawtherapee.com/Rawtherapee_Processing_Challenge_feedback)
+
+[![en](https://img.shields.io/badge/lang-en-red.svg)](README.md) [![zh-CN](https://img.shields.io/badge/lang-zh--CN-yellow.svg)](README.zh-CN.md) [![npm](https://img.shields.io/npm/dt/ai-pp3.svg)](https://www.npmjs.com/package/ai-pp3)
+
+AI-PP3 is an advanced command-line tool that combines multimodal AI analysis with RawTherapee's processing engine to create optimized development profiles (.pp3 files) for RAW photography. Designed for both automated workflows and creative exploration.
+
+## Usage Examples
+
+See [example documentation](examples/example.md) for practical usage scenarios.
+
+## Table of Contents
+
+- [Key Features](#key-features)
+- [Compatibility](#compatibility)
+- [Installation](#installation)
+- [AI Configuration](#ai-configuration)
+- [Basic Usage](#basic-usage)
+- [Advanced Features](#advanced-features)
+- [CLI Options](#cli-options)
+- [Roadmap](#roadmap)
+- [FAQ](#faq)
+- [License](#license)
+
+## Key Features
+
+- 🖼️ AI-driven analysis of RAW files (DNG/NEF/CR2/ARW)
+- ⚡ Batch PP3 creation with consistent processing parameters
+- 📝 Customizable development settings through natural language prompts
+- 🔀 Multi-model support (OpenAI, Anthropic, Google, Local)
+- 🎚️ Fine-grained control over PP3 sections (Exposure, Color, Detail)
+- 🔍 Interactive preview generation with quality controls
+
+## Compatibility
+
+### Supported Formats
+
+- **RAW Files**: All RawTherapee-supported formats including:
+  - Common: CR2/CR3, NEF, ARW, RAF, DNG
+  - Specialized: IIQ, PEF, RW2, ORF
+- **Output Formats**:
+  - JPEG (8-bit)
+  - TIFF (8/16-bit with ZLIB/NONE compression)
+  - PNG (8/16-bit)
+
+### System Requirements
+
+- Node.js ≥18
+- RawTherapee ≥5.8 (CLI required)
+- API Key for cloud AI _or_ local GPU for self-hosted models
+
+## Installation
+
+```bash
+# Global installation
+npm install -g ai-pp3
+
+# Verify installation
+ai-pp3 --version
+```
+
+## AI Configuration
+
+### Provider Setup
+
+```bash
+# Environment variables (.env file)
+OPENAI_API_KEY=your_key               # Default provider
+ANTHROPIC_API_KEY=your_key            # Claude models
+GOOGLE_GENERATIVE_AI_API_KEY=your_key # Gemini
+```
+
+### Model Selection
+
+```bash
+# Cloud models
+ai-pp3 input.dng --provider anthropic --model claude-3-opus-20240229
+
+# Local models
+ai-pp3 input.dng --provider openai-compatible --model llama3:8b-instruct-q5_K_M
+```
+
+## Basic Usage
+
+```bash
+# Basic processing with defaults
+ai-pp3 input.dng -o output.jpg
+
+# PP3-only mode with custom prompt
+ai-pp3 input.dng --pp3-only -p "You are a RawTherapee processing profile (pp3) optimization ARTIST. Your mission is to creatively transform the attached pp3 file with artistic vision. A JPEG preview is provided - use it as a starting point for your artistic interpretation.
+
+ARTISTIC MANDATE:
+- Prioritize artistic expression and unique visual style
+- Create a distinctive mood or atmosphere in the image
+- Experiment with color relationships and tonal contrasts
+
+Key Rules:
+1. Only modify existing parameter values
+2. Keep original section order and parameter order
+3. Make bold, creative enhancements
+4. Only include parameters you want to change
+
+Common Parameter Value Ranges:
+%%PARAMETER_RANGES%%
+
+Output Format:
+
+ANALYSIS:
+- Artistic opportunities and potential visual directions
+
+PLAN:
+- Creative vision and mood you're aiming to create
+EXECUTION:
+
+\`\`\`
+[Exposure]
+Clip=0.15
+Compensation=-0.7
+\`\`\`
+
+Example with another section:
+\`\`\`
+[ColorToning]
+Redlow=20
+\`\`\`
+
+[Additional changes following these rules]
+- Only include parameters you want to change
+- Never change section headers
+- Include only the sections that need changes
+
+Current pp3 to transform:
+"
+
+# Multi-section processing
+ai-pp3 input.dng --sections Exposure,ColorToning
+
+# Base profile refinement
+ai-pp3 input.dng --base existing.pp3 --preview-quality 85
+```
+
+## Advanced Features
+
+### Batch Processing
+
+```bash
+# Parallel processing (GNU Parallel)
+ls *.DNG | parallel -j8 ai-pp3 {} -o {.}.jpg
+
+# TIFF output with compression
+find . -name '*.NEF' -exec ai-pp3 {} --tiff --compression z \;
+```
+
+### Custom Workflows
+
+```bash
+# Multi-model comparison
+ai-pp3 input.dng \
+  --provider openai --model gpt-4-vision-preview \
+  --base neutral.pp3 --keep-preview
+```
+
+### Multi-Generation Processing
+
+The `--generations` option enables AI-powered comparison of multiple PP3 profiles:
+
+```bash
+# Generate 3 different approaches and let AI select the best
+ai-pp3 input.dng --generations 3
+
+# Advanced multi-generation with custom settings
+ai-pp3 input.dng \
+  --generations 5 \
+  --preset creative \
+  --provider anthropic \
+  --model claude-3-opus-20240229 \
+  --verbose
+```
+
+**How it works:**
+
+1. Generates multiple PP3 profiles using the same base settings
+2. Processes the RAW image with each profile
+3. Uses AI vision models to evaluate and compare all results
+4. Automatically selects the best processed image
+5. Saves the winning PP3 profile and final image
+6. Cleans up intermediate files (unless `--verbose` is used)
+
+## CLI Options
+
+### Core Parameters
+
+- `-o, --output <path>`: Output file path (default: `input.pp3` or `input_processed.[format]`)
+- `--pp3-only`: Generate PP3 file without processing image
+- `-p, --prompt <text>`: Natural language prompt for AI analysis
+- `--preset <name>`: Preset style to use (`aggressive`, `creative`, `balanced`, `technical`, `kb-guided`)
+
+Knowledge-guided processing:
+
+```bash
+ai-pp3 input.dng --preset kb-guided
+```
+
+### AI Configuration
+
+- `--provider <name>`: AI service provider (`openai`, `anthropic`, `google`, `openrouter`, `openai-compatible`)
+- `--model <name>`: Model name (default: `gpt-4-vision-preview`)
+
+### Output Format
+
+- `--tiff`: Export as TIFF format
+- `--png`: Export as PNG format
+- `--compression <type>`: TIFF compression (`z` or `none`)
+- `--bit-depth <n>`: Bit depth (`8` or `16`)
+- `--quality <n>`: JPEG quality (1-100)
+
+### Advanced Controls
+
+- `--base <path>`: Base PP3 file for incremental improvements
+- `--sections <list>`: Comma-separated PP3 sections to process (e.g. `Exposure,ColorToning`)
+- `--preview-quality <n>`: Preview quality (1-100, JPEG only, default: 85)
+- `--preview-format <format>`: Preview image format (`jpeg` or `png`, default: `jpeg`)
+- `--max-retries <n>`: Maximum number of retries for AI API calls (default: 2)
+- `--generations <n>`: Generate multiple PP3 profiles and use AI to select the best one (1-10, default: 1)
+- `-v, --verbose`: Enable detailed processing logs
+- `-k, --keep-preview`: Retain preview file after processing
+
+### Examples
+
+```bash
+# Basic conversion with quality control
+ai-pp3 input.dng --tiff --compression z --bit-depth 16
+
+# Multi-model comparison
+ai-pp3 input.dng --provider anthropic --model claude-3-opus-20240229
+
+# Section-limited processing
+ai-pp3 input.dng --sections Exposure,Detail --pp3-only
+
+# Use PNG preview for AI analysis (better for some models)
+ai-pp3 input.dng --preview-format png --keep-preview
+
+# Multi-generation mode: Generate 3 different PP3 profiles and let AI pick the best
+ai-pp3 input.dng --generations 3 --verbose
+
+# Multi-generation with custom settings
+ai-pp3 input.dng --generations 5 --preset creative --provider anthropic --model claude-3-opus-20240229
+```
+
+## Roadmap
+
+- [ ] ART (.arp) profile compatibility
+
+## FAQ
+
+For detailed questions and answers, see our [FAQ documentation](faq.md).
+
+## License
+
+[GPL-2.0](LICENSE)

@@ -1,0 +1,4 @@
+{
+  "openaiApiKey": "在这里填写中转站 API Key",
+  "openaiBaseUrl": "https://llm.koten.cc/v1"
+}

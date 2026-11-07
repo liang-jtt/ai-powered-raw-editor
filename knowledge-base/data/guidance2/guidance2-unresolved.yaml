@@ -1,0 +1,25 @@
+unresolved:
+  - id: u2-001
+    status: needs_validation
+    question: Which denoise strength preserves acceptable texture for different ISO and output sizes?
+    reason: Adobe gives ordering and capability, not universal values.
+  - id: u2-002
+    status: needs_validation
+    question: How much skin hue shift is tolerated across cameras and complexions?
+    reason: rules are diagnostic heuristics and require diverse test images.
+  - id: u2-003
+    status: needs_validation
+    question: When should mixed-light color contrast be retained as intent rather than corrected?
+    reason: requires human/context judgment.
+  - id: u2-004
+    status: needs_validation
+    question: What mask-edge cleanup rate occurs for automatic People/Sky selections?
+    reason: source documents describe tools but provide no benchmark.
+  - id: u2-005
+    status: needs_validation
+    question: How do local adjustments interact with Raw Details/Super Resolution in export pipelines?
+    reason: supported formats and sequencing are documented, but output QA is not.
+  - id: u2-006
+    status: unresolved
+    question: Obtain full PPA and wildlife tutorial frame-by-frame settings and downloadable before/after assets.
+    reason: browser page exposed only public video listings, not complete transcripts or PP3 files.

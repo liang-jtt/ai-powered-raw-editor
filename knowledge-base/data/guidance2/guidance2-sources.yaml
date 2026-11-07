@@ -1,0 +1,36 @@
+sources:
+  - source_id: adobe_lrc_masking_2026
+    title: Lightroom Classic Masking tool
+    author_or_org: Adobe
+    url: https://helpx.adobe.com/lightroom-classic/help/masking.html
+    date: 2026-08-07
+    license_status: public_help
+    coverage: local tone/color corrections, subject/sky/background masks, brush and range masks
+  - source_id: adobe_lrc_enhance_2026
+    title: Improve image quality using Enhance
+    author_or_org: Adobe
+    url: https://helpx.adobe.com/lightroom-classic/help/enhance-details.html
+    date: 2026-05-01
+    license_status: public_help
+    coverage: Denoise, Raw Details, Super Resolution ordering, supported formats and limitations
+  - source_id: adobe_lrc_tone_color_2025
+    title: Work with image tone and color
+    author_or_org: Adobe
+    url: https://helpx.adobe.com/lightroom-classic/help/image-tone-color.html
+    date: 2025-02-13
+    license_status: public_help
+    coverage: profiles as a starting foundation, adaptive profiles before other edits, profile intensity
+  - source_id: ppa_exposure_wb_video_2025
+    title: "Get It Right In-Camera: Exposure, White Balance & Workflow"
+    author_or_org: Professional Photographers of America
+    url: https://www.youtube.com/results?search_query=Professional+Photographers+of+America+Get+It+Right+In-Camera+Exposure+White+Balance+Workflow
+    date: 2025-05-19
+    license_status: public_video_listing
+    coverage: exposure and white-balance workflow case reference; detailed settings not available in page snapshot
+  - source_id: mark_dumbleton_noisy_wildlife_2025
+    title: The Editing Workflow That Saves Noisy Wildlife Photos
+    author_or_org: Mark Dumbleton
+    url: https://www.youtube.com/results?search_query=Mark+Dumbleton+The+Editing+Workflow+That+Saves+Noisy+Wildlife+Photos
+    date: 2025-08-24
+    license_status: public_video_listing
+    coverage: noisy wildlife workflow case reference; parameters not available in page snapshot

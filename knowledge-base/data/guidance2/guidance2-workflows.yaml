@@ -1,0 +1,58 @@
+workflows:
+  - id: wf2-portrait
+    name: Portrait exposure/skin/texture SOP
+    goal: readable face with believable skin and preserved texture
+    steps:
+      - order: 1
+        action: set profile and global exposure while protecting highlights
+        reason: establishes a stable tonal baseline
+      - order: 2
+        action: correct global WB from a neutral area, then mask skin/face
+        reason: avoids moving background neutrals while fixing complexion
+      - order: 3
+        action: make restrained local color and texture adjustments
+        reason: skin problems are spatial and need containment
+      - order: 4
+        action: inspect at 100% and fit view
+        reason: catches pores, halos, and unnatural transitions
+    stop_conditions: face reads naturally; no highlight clipping; mask edges invisible
+    failure_signals: waxy pores, red cheeks, gray whites, halo at jaw/hair
+    human_confirmation: final skin hue and texture judgment, especially mixed light
+  - id: wf2-night
+    name: Night lighting/noise/detail SOP
+    goal: reduce distracting noise while retaining light atmosphere
+    steps:
+      - order: 1
+        action: establish exposure and black-point without crushing shadow story
+        reason: avoids mistaking a dark mood for an exposure defect
+      - order: 2
+        action: apply Denoise before masks or Remove
+        reason: Adobe notes Enhance can change later tool results
+      - order: 3
+        action: reassess sky, neon, foliage and fine edges at 100%
+        reason: noise reduction can remove meaningful texture
+      - order: 4
+        action: use local masks to protect or restore key light zones
+        reason: atmosphere is not uniform across the frame
+    stop_conditions: noise is unobtrusive at delivery size and glow remains dimensional
+    failure_signals: waxy sky, plastic foliage, color blotches, halos
+    human_confirmation: decide acceptable grain versus mood and print/display target
+  - id: wf2-backlit-mixed
+    name: Backlit or indoor mixed-light SOP
+    goal: balance subject readability with believable background and spatial color
+    steps:
+      - order: 1
+        action: identify highlight limit and neutral anchors
+        reason: determines whether global exposure/WB can move safely
+      - order: 2
+        action: set compromise global exposure and WB
+        reason: preserves shared scene baseline
+      - order: 3
+        action: mask subject/background or separate light zones
+        reason: uneven illumination cannot be solved globally
+      - order: 4
+        action: compare thumbnail, 100%, and edge transitions
+        reason: checks hierarchy and mask artifacts
+    stop_conditions: subject readable, background highlights controlled, zones coherent
+    failure_signals: clipped windows/sky, gray skin, colored seams, halo edges
+    human_confirmation: approve intentional color contrast versus correction

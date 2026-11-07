@@ -1,0 +1,55 @@
+sources:
+  - source_id: adobe_lrc_masking_2026
+    title: Lightroom Classic Masking tool
+    author: Adobe
+    url: https://helpx.adobe.com/lightroom-classic/help/masking.html
+    source_type: official-doc
+    published_at: 2026-08-07
+    accessed_at: 2026-08-31
+    license: unknown
+    scope: evidence for the distinction between global and targeted corrections; Lightroom-specific implementation only
+  - source_id: adobe_lrc_enhance_2026
+    title: Improve image quality using Enhance
+    author: Adobe
+    url: https://helpx.adobe.com/lightroom-classic/help/enhance-details.html
+    source_type: official-doc
+    published_at: 2026-05-01
+    accessed_at: 2026-08-31
+    license: unknown
+    scope: Denoise ordering and quality risks; Lightroom-specific implementation only
+  - source_id: adobe_lrc_tone_color_2025
+    title: Work with image tone and color
+    author: Adobe
+    url: https://helpx.adobe.com/lightroom-classic/help/image-tone-color.html
+    source_type: official-doc
+    published_at: 2025-02-13
+    accessed_at: 2026-08-31
+    license: unknown
+    scope: profile intensity as a creative starting point, not a quality guarantee
+  - source_id: rawpedia_processing_profiles_2023
+    title: Sidecar Files - Processing Profiles
+    author: RawTherapee contributors
+    url: https://rawpedia.rawtherapee.com/Sidecar_Files_-_Processing_Profiles
+    source_type: official-doc
+    published_at: 2023-03-09
+    accessed_at: 2026-08-31
+    license: unknown
+    scope: PP3 as a non-destructive sidecar; does not establish a scene-specific editing case
+  - source_id: rawpedia_exposure
+    title: Exposure
+    author: RawTherapee contributors
+    url: https://rawpedia.rawtherapee.com/Exposure
+    source_type: official-doc
+    published_at: unknown
+    accessed_at: 2026-08-31
+    license: unknown
+    scope: global exposure and highlight concepts from Guidance 1
+  - source_id: rawpedia_noise_reduction
+    title: Noise Reduction
+    author: RawTherapee contributors
+    url: https://rawpedia.rawtherapee.com/Noise_Reduction
+    source_type: official-doc
+    published_at: unknown
+    accessed_at: 2026-08-31
+    license: unknown
+    scope: noise, texture, and inspection concepts from Guidance 1

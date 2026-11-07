@@ -1,0 +1,5 @@
+{
+  "checkpoint_path": "../.runtime/weights/HPSv3.safetensors",
+  "base_model_path": "../.runtime/Qwen2-VL-7B-Instruct",
+  "device": "cuda"
+}

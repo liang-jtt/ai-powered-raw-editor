@@ -1,0 +1,7 @@
+unresolved:
+  - {id: u-pp3-ranges, item: exact PP3 keys and numeric ranges for all cited sliders, reason: RawPedia UI text does not expose version-specific PP3 schema, status: needs_validation}
+  - {id: u-wb-temperature-units, item: camera-specific temperature/tint limits, reason: ranges vary by camera and version, status: needs_validation}
+  - {id: u-demosaic-threshold, item: objective ISO threshold for switching from AMaZE to LMMSE/IGV, reason: documentation gives guidance but no universal cutoff, status: needs_validation}
+  - {id: u-local-mask-spill, item: quantitative Scope/Transition values preventing color spill, reason: scene-dependent and not specified, status: needs_validation}
+  - {id: u-hc-method-choice, item: deterministic method-selection rule for HR algorithms, reason: article describes strengths but no scoring metric, status: needs_validation}
+  - {id: u-sharpen-version, item: whether threshold/edge-tolerance guidance is unchanged across RT versions, reason: version-specific behavior not captured, status: needs_validation}

@@ -1,0 +1,8 @@
+# Install in a dedicated environment; choose matching torch/torchvision wheels for your device.
+torch>=2.6,<3
+torchvision>=0.21,<1
+timm>=0.9,<2
+einops>=0.6,<1
+numpy>=1.26,<3
+Pillow>=10.4,<13
+PyYAML>=6,<7

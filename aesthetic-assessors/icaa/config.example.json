@@ -1,0 +1,5 @@
+{
+  "source_dir": "../.runtime/icaa-source",
+  "checkpoint_path": "../.runtime/weights/icaa17k-color.pth",
+  "device": "cpu"
+}

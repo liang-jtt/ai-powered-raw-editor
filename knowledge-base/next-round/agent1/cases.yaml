@@ -1,0 +1,34 @@
+cases:
+  - id: candidate-local-example-1
+    source_id: project-examples-rt511
+    status: candidate_not_complete
+    assets: {raw: art-main/examples/1/IMG_0080.CR2, pp3: art-main/examples/1/ai.pp3, rendered_jpeg: art-main/examples/1/ai.jpg}
+    operation_notes: unknown
+    before_after: only rendered JPEG is present; separately exported unedited before is absent
+    license: unknown
+    reproducibility: unverified_pending_cli
+    missing: [license/provenance, documented action sequence, independently identified before export, CLI render log]
+  - id: candidate-local-example-2
+    source_id: project-examples-rt511
+    status: candidate_not_complete
+    assets: {raw: art-main/examples/2/2010_MONTR_033.NEF, pp3: art-main/examples/2/ai.pp3, rendered_jpeg: art-main/examples/2/ai.jpg}
+    operation_notes: unknown
+    before_after: only rendered JPEG is present; separately exported unedited before is absent
+    license: unknown
+    reproducibility: unverified_pending_cli
+    missing: [license/provenance, documented action sequence, before export, CLI render log]
+  - id: candidate-local-example-4
+    source_id: project-examples-rt511
+    status: candidate_not_complete
+    assets: {raw: art-main/examples/4/B.dng, pp3: art-main/examples/4/ai.pp3, rendered_jpeg: art-main/examples/4/ai.jpg}
+    operation_notes: unknown
+    before_after: only rendered JPEG is present; separately exported unedited before is absent
+    license: unknown
+    reproducibility: unverified_pending_cli
+    missing: [license/provenance, documented action sequence, before export, CLI render log]
+  - id: complete-case-search
+    source_id: rawpedia-exposure
+    status: not_found_within_available_local_and_official_sources
+    required: [legal_RAW_download, corresponding_PP3, before_after_or_reproducible_output, operation_description, clear_license]
+    result: 'No complete case was confirmed. RawPedia examples describe processing but the inspected source records lack the required downloadable RAW plus PP3 bundle.'
+    confidence: high
